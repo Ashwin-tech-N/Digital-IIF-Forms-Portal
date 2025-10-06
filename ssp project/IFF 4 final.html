@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF-4 Property Search & Seizure Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+            color: #000;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 0.5in;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .ncrb-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        label {
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+        input[type="text"], 
+        input[type="date"], 
+        textarea, 
+        select {
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 2px 5px;
+            font-size: 14px;
+            background: transparent;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .wide-input {
+            width: 250px;
+        }
+        textarea {
+            width: 100%;
+            resize: vertical;
+            min-height: 60px;
+            border: 1px solid #000;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        .table th {
+            font-weight: bold;
+            padding: 3px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #3a5a80;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .button-container {
+                display: none;
+            }
+        }
+        .instruction {
+            font-style: italic;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .signature-area {
+            margin-top: 30px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .option-list {
+            margin-left: 20px;
+        }
+        .signature-box {
+            border: 1px solid #000;
+            height: 80px;
+            width: 200px;
+            margin-top: 5px;
+        }
+        .seal-box {
+            border: 2px dashed #000;
+            height: 100px;
+            width: 150px;
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 10px;
+        }
+        /* Animation CSS for fade out effect */
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        /* Animation for fade in effect on page load */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        /* Custom modal styles */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .custom-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        .custom-modal-content h3 {
+            margin: 0;
+            color: #4a6fa5;
+        }
+        .custom-modal-content p {
+            margin: 20px 0;
+            color: #555;
+        }
+        .custom-modal-content button {
+            padding: 10px 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .custom-modal-content button:hover {
+            background: #3a5a80;
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in" id="formContainer">
+        <div class="ncrb-header">
+            N.C.R.B.
+        </div>
+        <div class="ncrb-header">
+            I.I.F.-IV
+        </div>
+        
+        <div class="form-title">
+            PROPERTY SEARCH & SEIZURE FORM
+        </div>
+        <div class="instruction" style="text-align: center;">
+            (Search/Production/Recovery u/s 51/102/165 Cr.P.C...... etc.)
+        </div>
+        
+        <form id="propertyForm">
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>1. District</label>
+                        <input type="text" id="district" name="district" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>P.S.</label>
+                        <input type="text" id="policeStation" name="policeStation" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="year" name="year" style="width: 60px;">
+                    </div>
+                    <div class="form-group">
+                        <label>FIR/G.D.No.</label>
+                        <input type="text" id="firNo" name="firNo" style="width: 100px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="firDate" name="firDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>2. Acts and Sections</label>
+                        <textarea id="actsSections" name="actsSections"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>3. Nature of property seized:</label>
+                        <select id="propertyNature" name="propertyNature">
+                            <option value="Stolen">Stolen</option>
+                            <option value="Unclaimed">Unclaimed</option>
+                            <option value="Unlawful possession">Unlawful possession</option>
+                            <option value="Involved">Involved</option>
+                            <option value="Intestate">Intestate</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>4. Property seized/ recovered:</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(a) Date</label>
+                        <input type="date" id="seizureDate" name="seizureDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(b) Time</label>
+                        <input type="text" id="seizureTime" name="seizureTime" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(c) Place</label>
+                        <textarea id="seizurePlace" name="seizurePlace"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(d) Description of the place</label>
+                        <textarea id="placeDescription" name="placeDescription"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>5. Person from whom seized /recovered :</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="personName" name="personName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Father’s/Husband’s name</label>
+                        <input type="text" id="personFatherName" name="personFatherName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sex</label>
+                        <select id="personSex" name="personSex" style="width: 100px;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="text" id="personAge" name="personAge" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <input type="text" id="personOccupation" name="personOccupation" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="personAddress" name="personAddress"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Professional receiver of stolen property.</label>
+                        <select id="professionalReceiver" name="professionalReceiver">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>6. Witnesses:</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(i) Name</label>
+                        <input type="text" id="witness1Name" name="witness1Name" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Father’s/Husband’s name</label>
+                        <input type="text" id="witness1FatherName" name="witness1FatherName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="text" id="witness1Age" name="witness1Age" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <input type="text" id="witness1Occupation" name="witness1Occupation" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="witness1Address" name="witness1Address"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(ii) Name</label>
+                        <input type="text" id="witness2Name" name="witness2Name" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Father’s/Husband’s Name</label>
+                        <input type="text" id="witness2FatherName" name="witness2FatherName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="text" id="witness2Age" name="witness2Age" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <input type="text" id="witness2Occupation" name="witness2Occupation" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="witness2Address" name="witness2Address"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>7. Action taken/recommended for disposal of perishable property</label>
+                        <textarea id="perishableAction" name="perishableAction"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>8. Action taken/recommended for keeping of valuable property</label>
+                        <textarea id="valuableAction" name="valuableAction"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>9. Identification required.</label>
+                        <select id="identificationRequired" name="identificationRequired">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>10. Details of properties seized/ recovered (Use appropriate prescribed form(s) and attach).</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(1)</label>
+                        <textarea id="property1" name="property1"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(2)</label>
+                        <textarea id="property2" name="property2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="instruction">(Attach separate sheet, if required)</div>
+            </div>
+            
+            <div class="footer">
+                -1/2:
+            </div>
+            <div class="ncrb-header">
+                N.C.R.B.
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>11. Circumstances/grounds for seizure</label>
+                        <textarea id="seizureGrounds" name="seizureGrounds"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>12. The above mentioned properties were seized in accordance with the provisions of law in the presence of the above said <br>witnesses/* and a copy of the seizure form was given to the person/ the occupant of the place from whom seized.</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>13 The following properties were packed and/or sealed and the signature of the above said witnesses obtained thereon or on the<br> body of the property.</label>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Property</th>
+                            <th>Indicate whether signature obtained on the packet or on the body of the property</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td><input type="text" name="packedProperty1" style="width: 100%;"></td>
+                            <td><input type="text" name="signatureLocation1" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td><input type="text" name="packedProperty2" style="width: 100%;"></td>
+                            <td><input type="text" name="signatureLocation2" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td><input type="text" name="packedProperty3" style="width: 100%;"></td>
+                            <td><input type="text" name="signatureLocation3" style="width: 100%;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Signature of the person from whom seized (if present)</label>
+                        <div class="signature-box"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Specimen of the seal is given below</label>
+                        <div class="seal-box">SEAL</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row" style="justify-content: space-between;">
+                    <div>
+                        <div class="form-row">
+                            <label>Witness-1</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Signature of Investigating officer</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="officerName" name="officerName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Rank</label>
+                            <input type="text" id="officerRank" name="officerRank" style="width: 100px;">
+                            <label>No.</label>
+                            <input type="text" id="officerNo" name="officerNo" style="width: 100px;">
+                        </div>
+                        <div class="form-row">
+                            <label>Place</label>
+                            <input type="text" id="officerPlace" name="officerPlace" class="wide-input">
+                            <label>Date</label>
+                            <input type="date" id="officerDate" name="officerDate" style="width: 120px;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 20px;">
+                    <div>
+                        <div class="form-row">
+                            <label>Witness-2</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instruction">
+                * In case the property is seized from such a place that no receipt is required to be given to anybody, this portion of the sentence should be struck off.
+            </div>
+            
+            <div class="footer">
+                - :2/2 :
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="header">
+                <h3>Attachment to Item 10 of Property Search & Seizure Form.</h3>
+                <h3>Details of Counterfeit Currency recovered/seized :</h3>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" id="currencyDistrict" name="currencyDistrict" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>P.S.</label>
+                        <input type="text" id="currencyPS" name="currencyPS" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="currencyYear" name="currencyYear" style="width: 60px;">
+                    </div>
+                    <div class="form-group">
+                        <label>FIR No.</label>
+                        <input type="text" id="currencyFIRNo" name="currencyFIRNo" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="currencyDate" name="currencyDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Number of pieces</th>
+                        <th>Series</th>
+                        <th>Serial Number</th>
+                        <th>Type of currency</th>
+                        <th>Denomination</th>
+                        <th>Visible counterfeiting mark(s)</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td><input type="text" name="currency1Pieces" style="width: 100%;"></td>
+                        <td><input type="text" name="currency1Series" style="width: 100%;"></td>
+                        <td><input type="text" name="currency1Serial" style="width: 100%;"></td>
+                        <td><input type="text" name="currency1Type" style="width: 100%;"></td>
+                        <td><input type="text" name="currency1Denomination" style="width: 100%;"></td>
+                        <td><input type="text" name="currency1Marks" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td><input type="text" name="currency2Pieces" style="width: 100%;"></td>
+                        <td><input type="text" name="currency2Series" style="width: 100%;"></td>
+                        <td><input type="text" name="currency2Serial" style="width: 100%;"></td>
+                        <td><input type="text" name="currency2Type" style="width: 100%;"></td>
+                        <td><input type="text" name="currency2Denomination" style="width: 100%;"></td>
+                        <td><input type="text" name="currency2Marks" style="width: 100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="form-section">
+                <div class="form-row" style="justify-content: space-between; margin-top: 30px;">
+                    <div>
+                        <div class="form-row">
+                            <label>Witness-1</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Witness - 2</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Signature of Investigating Officer</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="currencyOfficerName" name="currencyOfficerName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Rank</label>
+                            <input type="text" id="currencyOfficerRank" name="currencyOfficerRank" style="width: 100px;">
+                            <label>No.</label>
+                            <input type="text" id="currencyOfficerNo" name="currencyOfficerNo" style="width: 100px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="header">
+                <h3>Attachment to Item 10 of Property Search & Seizure Form.</h3>
+                <div class="ncrb-header">
+                    N.C.R.B.
+                </div>
+                <h3>Details of Narcotic drugs recovered/seized:</h3>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" id="drugDistrict" name="drugDistrict" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>P.S.</label>
+                        <input type="text" id="drugPS" name="drugPS" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="drugYear" name="drugYear" style="width: 60px;">
+                    </div>
+                    <div class="form-group">
+                        <label>FIR No.</label>
+                        <input type="text" id="drugFIRNo" name="drugFIRNo" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="drugDate" name="drugDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Name of drug</th>
+                        <th>No. of packets</th>
+                        <th>Weight (kg/gms.)</th>
+                        <th>Description of the packing and marking, if any</th>
+                        <th>Method of concealment</th>
+                        <th>Estimated value (Rs.)</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td><input type="text" name="drug1Name" style="width: 100%;"></td>
+                        <td><input type="text" name="drug1Packets" style="width: 100%;"></td>
+                        <td><input type="text" name="drug1Weight" style="width: 100%;"></td>
+                        <td><input type="text" name="drug1Packing" style="width: 100%;"></td>
+                        <td><input type="text" name="drug1Concealment" style="width: 100%;"></td>
+                        <td><input type="text" name="drug1Value" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td><input type="text" name="drug2Name" style="width: 100%;"></td>
+                        <td><input type="text" name="drug2Packets" style="width: 100%;"></td>
+                        <td><input type="text" name="drug2Weight" style="width: 100%;"></td>
+                        <td><input type="text" name="drug2Packing" style="width: 100%;"></td>
+                        <td><input type="text" name="drug2Concealment" style="width: 100%;"></td>
+                        <td><input type="text" name="drug2Value" style="width: 100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Whether the notice under Section 50 of NDPS Act served on the person ?</label>
+                        <select id="ndpsNotice" name="ndpsNotice">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Whether the Laboratory analysis form filled on the spot ?</label>
+                        <select id="labAnalysis" name="labAnalysis">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row" style="justify-content: space-between;">
+                    <div>
+                        <div class="form-row">
+                            <label>Witness-1</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Signature of Magistrate (when present) /Gazetted Officer</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="magistrateName" name="magistrateName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Court</label>
+                            <input type="text" id="magistrateCourt" name="magistrateCourt" class="wide-input">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Signature of Investigating Officer</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="drugOfficerName" name="drugOfficerName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Rank</label>
+                            <input type="text" id="drugOfficerRank" name="drugOfficerRank" style="width: 100px;">
+                            <label>No.</label>
+                            <input type="text" id="drugOfficerNo" name="drugOfficerNo" style="width: 100px;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 20px;">
+                    <div>
+                        <div class="form-row">
+                            <label>Witness - 2</label>
+                        </div>
+                        <div class="signature-box"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button type="button" class="btn" id="saveBtn">Save Form</button>
+                <button type="button" class="btn" id="printBtn">Print Form</button>
+                <button type="button" class="btn" id="exitBtn">Exit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             const container = document.getElementById('formContainer');
+             container.classList.add('fade-in');
+        });
+
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const form = document.getElementById('propertyForm');
+            const formData = new FormData(form);
+            const formObject = Object.fromEntries(formData.entries());
+
+            if (!formObject.firNo || !formObject.firDate) {
+                showCustomModal('Please fill at least the FIR/G.D.No. and Date before saving.');
+                return;
+            }
+
+            const recordId = 'IIF4-' + Date.now();
+            const record = {
+                id: recordId,
+                formData: formObject
+            };
+
+            let records = JSON.parse(localStorage.getItem('iif4_records')) || [];
+            records.push(record);
+            localStorage.setItem('iif4_records', JSON.stringify(records));
+
+            showCustomModal('Form data saved successfully!');
+            window.location.href = 'police1.html?view=dashboard&tab=records';
+        });
+
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('exitBtn').addEventListener('click', function() {
+            const container = document.getElementById('formContainer');
+            container.classList.remove('fade-in');
+            container.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'police1.html?view=dashboard';
+            }, 500);
+        });
+
+        function showCustomModal(message) {
+            const modalHTML = `
+                <div class="custom-modal" id="customModal">
+                    <div class="custom-modal-content">
+                        <h3>Notice</h3>
+                        <p>${message}</p>
+                        <button onclick="document.getElementById('customModal').remove()">OK</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+    </script>
+</body>
+</html>

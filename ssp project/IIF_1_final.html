@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIF-1 Form Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+            color: #000;
+        }
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 0.5in;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        label {
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+        input[type="text"], 
+        input[type="date"], 
+        textarea, 
+        select {
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 2px 5px;
+            font-size: 14px;
+            background: transparent;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .wide-input {
+            width: 250px;
+        }
+        textarea {
+            width: 100%;
+            resize: vertical;
+            min-height: 60px;
+            border: 1px solid #000;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .table th {
+            text-align: center;
+            font-weight: bold;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #3a5a80;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .button-container {
+                display: none;
+            }
+        }
+        .instruction {
+            font-style: italic;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        /* Animation CSS for fade out effect */
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        
+        /* Custom Modal Styling */
+        #customModal {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.6); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            max-width: 400px; 
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #4a6fa5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="formContainer">
+        <div class="header">
+            <h2>FIRST INFORMATION REPORT</h2>
+            <p>(Under Section 154 Cr.P.C.)</p>
+        </div>
+        
+        <!-- IMPORTANT: The form's action is now handled by JavaScript/fetch -->
+        <form id="iifForm">
+            <!-- UPDATED NEW FIELD FOR FAR LEFT POSITION - NO BORDER -->
+            <div class="form-section">
+                <div class="form-row" style="align-items: stretch; margin-bottom: 20px;">
+                    <label style="font-weight: bold; width: 140px; flex-shrink: 0; align-self: flex-start; padding-top: 2px;">Case Name/Title:</label>
+                    <input type="text" id="caseTitle" name="caseTitle" class="wide-input" style="width: calc(100% - 140px); border-bottom: 1px solid #000;">
+                </div>
+            </div>
+            <!-- END NEW FIELD -->
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>1. District</label>
+                        <input type="text" id="district" name="district" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>P.S.</label>
+                        <input type="text" id="policeStation" name="policeStation" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="year" name="year" style="width: 60px;">
+                    </div>
+                    <div class="form-group">
+                        <label>FIR No.</label>
+                        <input type="text" id="firNo" name="firNo" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="firDate" name="firDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>2. (i) Act</label>
+                        <input type="text" id="act1" name="act1" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections1" name="sections1" class="wide-input">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(ii) Act</label>
+                        <input type="text" id="act2" name="act2" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections2" name="sections2" class="wide-input">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iii) Act</label>
+                        <input type="text" id="act3" name="act3" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections3" name="sections3" class="wide-input">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iv) Other Acts & Sections</label>
+                        <input type="text" id="otherActs" name="otherActs" class="wide-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>3. (a) Occurrence of offence: Day</label>
+                        <input type="text" id="offenceDay" name="offenceDay" style="width: 100px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date from</label>
+                        <input type="date" id="dateFrom" name="dateFrom" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date to</label>
+                        <input type="date" id="dateTo" name="dateTo" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Time Period</label>
+                        <input type="text" id="timePeriod" name="timePeriod" style="width: 100px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Time from</label>
+                        <input type="text" id="timeFrom" name="timeFrom" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                    <div class="form-group">
+                        <label>Time to</label>
+                        <input type="text" id="timeTo" name="timeTo" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(b) Information received at P.S.: Date</label>
+                        <input type="date" id="infoDate" name="infoDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="text" id="infoTime" name="infoTime" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(c) General Diary Reference : Entry No.</label>
+                        <input type="text" id="diaryEntryNo" name="diaryEntryNo" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Time</label>
+                        <input type="text" id="diaryTime" name="diaryTime" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>4. Type of Information :</label>
+                        <select id="infoType" name="infoType">
+                            <option value="Written">Written</option>
+                            <option value="Oral">Oral</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>5. Place of Occurrence : (a) Direction and distance from P.S.</label>
+                        <input type="text" id="directionDistance" name="directionDistance" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Beat No.</label>
+                        <input type="text" id="beatNo" name="beatNo" style="width: 100px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(b) Address</label>
+                        <textarea id="occurrenceAddress" name="occurrenceAddress"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(c) In case, outside the limit of this Police Station, then</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name of P.S.</label>
+                        <input type="text" id="outsidePsName" name="outsidePsName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" id="outsideDistrict" name="outsideDistrict" class="wide-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>6. Complainant / Informant :</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(a) Name</label>
+                        <input type="text" id="complainantName" name="complainantName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(b) Father's/Husband's Name</label>
+                        <input type="text" id="complainantFatherName" name="complainantFatherName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(c) Date/Year of Birth</label>
+                        <input type="text" id="complainantDob" name="complainantDob" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(d) Nationality</label>
+                        <input type="text" id="complainantNationality" name="complainantNationality" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(e) Passport No.</label>
+                        <input type="text" id="passportNo" name="passportNo" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Issue</label>
+                        <input type="date" id="passportIssueDate" name="passportIssueDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Place of Issue</label>
+                        <input type="text" id="passportIssuePlace" name="passportIssuePlace" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(f) Occupation</label>
+                        <input type="text" id="complainantOccupation" name="complainantOccupation" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(g) Address</label>
+                        <textarea id="complainantAddress" name="complainantAddress"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>7. Details of known/suspected/unknown accused with full particulars:</label>
+                    </div>
+                </div>
+                <div class="instruction">(Attach separate sheet, if necessary)</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(1)</label>
+                        <textarea id="accused1" name="accused1"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(2)</label>
+                        <textarea id="accused2" name="accused2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(3)</label>
+                        <textarea id="accused3" name="accused3"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>8. Reasons for delay in reporting by the complainant / informant</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <textarea id="delayReasons" name="delayReasons"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>9. Particulars of properties stolen</label>
+                    </div>
+                </div>
+                <div class="instruction">(Attach separate sheet, if necessary)</div>
+                
+                <div class="form-row">
+                    <textarea id="stolenProperties" name="stolenProperties"></textarea>
+                </div>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>10. Total value of property stolen</label>
+                        <input type="text" id="propertyValue" name="propertyValue" class="wide-input">
+                        <span>I.I.F.-I</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>11. Inquest Report / U.D. case No., if any</label>
+                        <input type="text" id="inquestReport" name="inquestReport" class="wide-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>12. First Information contents</label>
+                    <span class="instruction">(Attach separate sheet, if required)</span>
+                    <textarea id="firstInfoContents" name="firstInfoContents"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>13. Action taken: Since the above information reveals commission of offence(s) u/s as mentioned at Item No. 2. :</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="radio" id="action1" name="actionTaken" value="registered">
+                        <label for="action1">(1) Registered the case and took up the investigation or</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="radio" id="action2" name="actionTaken" value="directed">
+                        <label for="action2">(2) Directed (Name of I.O.)</label>
+                        <input type="text" id="ioName" name="ioName" style="width: 150px;">
+                        <label>Rank</label>
+                        <input type="text" id="ioRank" name="ioRank" style="width: 100px;">
+                        <label>No.</label>
+                        <input type="text" id="ioNo" name="ioNo" style="width: 80px;">
+                        <label>to take up the Investigation</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="radio" id="action3" name="actionTaken" value="refused">
+                        <label for="action3">(3) Refused investigation due to</label>
+                        <input type="text" id="refusalReason" name="refusalReason" class="wide-input">
+                        <label>or</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="radio" id="action4" name="actionTaken" value="transferred">
+                        <label for="action4">(4) Transferred to P.S.</label>
+                        <input type="text" id="transferredPs" name="transferredPs" style="width: 150px;">
+                        <label>District</label>
+                        <input type="text" id="transferredDistrict" name="transferredDistrict" style="width: 150px;">
+                        <label>on point of jurisdiction.</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>F.I.R. read over to the complainant / informant, admitted to be correctly recorded and a copy given to the <br>complainant /informant, free of cost.</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>R.O.A.C.</label>
+                    <br>
+                    <label>Signature of Officer in charge, Police Station</label>
+                    <input type="text" id="officerSignature" name="officerSignature" style="width: 200px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>14. Signature / Thumb impression of the complainant / informant.</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="complainantSignatureName" name="complainantSignatureName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Rank</label>
+                        <input type="text" id="complainantRank" name="complainantRank" style="width: 120px;">
+                        <label>No.</label>
+                        <input type="text" id="complainantNo" name="complainantNo" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>15. Date and time of despatch to the court</label>
+                        <input type="date" id="dispatchDate" name="dispatchDate" style="width: 120px;">
+                        <input type="text" id="dispatchTime" name="dispatchTime" style="width: 80px;" placeholder="HH:MM">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row" style="justify-content: center; margin-top: 20px;">
+                <span>--- : 2/2 : ---</span>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="header">
+                <h3>N.C.R.B.</h3>
+                <p>Physical features, deformities and other details of the suspect/accused : ( If known / seen )</p>
+            </div>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sl. No.</th>
+                        <th>Sex</th>
+                        <th>Date/Year of Birth</th>
+                        <th>Build</th>
+                        <th>Height (cms.)</th>
+                        <th>Completion</th>
+                        <th>Identification Mark(s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td><input type="text" id="sl1Sex" name="sl1Sex" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Dob" name="sl1Dob" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Build" name="sl1Build" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Height" name="sl1Height" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Completion" name="sl1Completion" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Marks" name="sl1Marks" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td><input type="text" id="sl2Sex" name="sl2Sex" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Dob" name="sl2Dob" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Build" name="sl2Build" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Height" name="sl2Height" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Completion" name="sl2Completion" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Marks" name="sl2Marks" style="width: 100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Deformities/ Peculiarities</th>
+                        <th>Teeth</th>
+                        <th>Hair</th>
+                        <th>Eyes</th>
+                        <th>Habit(s)</th>
+                        <th>Dress Habit(s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="sl1Deformities" name="sl1Deformities" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Teeth" name="sl1Teeth" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Hair" name="sl1Hair" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Eyes" name="sl1Eyes" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Habits" name="sl1Habits" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Dress" name="sl1Dress" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="sl2Deformities" name="sl2Deformities" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Teeth" name="sl2Teeth" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Hair" name="sl2Hair" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Eyes" name="sl2Eyes" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Habits" name="sl2Habits" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Dress" name="sl2Dress" style="width: 100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>LANGUAGE/DIALECT</th>
+                        <th colspan="6">PLACE OF</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Burn Mark</th>
+                        <th>Leucoderma</th>
+                        <th>Mole</th>
+                        <th>Scar</th>
+                        <th>Tattoo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="sl1Language" name="sl1Language" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Burn" name="sl1Burn" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Leucoderma" name="sl1Leucoderma" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Mole" name="sl1Mole" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Scar" name="sl1Scar" style="width: 100%;"></td>
+                        <td><input type="text" id="sl1Tattoo" name="sl1Tattoo" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="sl2Language" name="sl2Language" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Burn" name="sl2Burn" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Leucoderma" name="sl2Leucoderma" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Mole" name="sl2Mole" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Scar" name="sl2Scar" style="width: 100%;"></td>
+                        <td><input type="text" id="sl2Tattoo" name="sl2Tattoo" style="width: 100%;"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="instruction">
+                These fields will be entered only if complainant/informant gives any one or more particulars about the suspect/accused.
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <strong>N.C.R.B.</strong><br>
+                <strong>I.I.F.-II</strong>
+            </div>
+            
+            <div class="button-container">
+                <!-- Changed type to button to prevent default form submission -->
+                <button type="button" class="btn" id="saveBtn">Save Form</button>
+                <button type="button" class="btn" id="printBtn">Print Form</button>
+                <button type="button" class="btn" id="exitBtn">Exit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // --- IMPORTANT: THE SCRIPT URL HAS BEEN UPDATED WITH YOUR PROVIDED URL ---
+        // This is the URL of your deployed Google Apps Script (Web App URL).
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGU-KZvo4mmq6qLD51fv94KIwtPJMw5yG1c2iOB_wb7tKcWfcmcqnvI5irMKS3xv4t/exec';
+        // --------------------------------------------------------------------------------------------------
+
+        // Custom Modal function to replace alerts. isFinal=true means show the OK button, false means show a spinner.
+        function showCustomModal(message, isFinal = true) {
+            // Remove any existing modal
+            document.getElementById('customModal')?.remove();
+
+            const buttonHtml = isFinal 
+                ? `<button onclick="document.getElementById('customModal').remove()" class="btn">OK</button>`
+                : `<div class="spinner"></div>`;
+
+            const modalHTML = `
+                <div id="customModal">
+                    <div class="modal-content">
+                        <h3>${isFinal ? 'Notice' : 'Loading'}</h3>
+                        <p style="margin:20px 0;">${message}</p>
+                        ${buttonHtml}
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        document.getElementById('saveBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Stop the form from submitting normally
+
+            if (SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                showCustomModal('ERROR: Please complete Step 2 and replace the SCRIPT_URL in the HTML file with your unique Google Apps Script URL.');
+                return;
+            }
+
+            const form = document.getElementById('iifForm');
+            const formData = new FormData(form);
+            const formObject = Object.fromEntries(formData.entries());
+
+            // Basic validation check (kept from original code)
+            if (!formObject.firNo || !formObject.firDate) {
+                showCustomModal('Please fill at least the FIR No. and Date before saving.');
+                return;
+            }
+
+            // Show loading message
+            showCustomModal('Saving data to Google Sheet... Please wait.', false); 
+            
+            // Convert form data object to a URL-encoded query string for the GET request
+            const queryString = new URLSearchParams(formObject).toString();
+            
+            // Send the data to the Google Apps Script URL
+            fetch(`${SCRIPT_URL}?${queryString}`)
+                .then(response => {
+                    // Remove the loading modal
+                    document.getElementById('customModal')?.remove();
+
+                    // Check if the request was successful
+                    if (response.ok || response.redirected) {
+                        showCustomModal('Success! Form data saved to Google Sheet.', true);
+                    } else {
+                        // Attempt to read the error message from the response text
+                        return response.text().then(text => {
+                            // If the response text contains the error, include it.
+                            const errorMatch = text.match(/Error: (.*)/) || ["", "Check the Apps Script logs (View -> Executions) for details."];
+                            throw new Error(`Server execution failed. Error Details: ${errorMatch[1]}`);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving data to Google Sheet:', error);
+                    document.getElementById('customModal')?.remove();
+                    // Display the friendly error message
+                    showCustomModal(`An error occurred while saving. Please ensure the Google Sheet URL is correct in your Apps Script.`, true);
+                });
+        });
+
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
+        });
+
+        // Event listener for the new exit button
+        document.getElementById('exitBtn').addEventListener('click', function() {
+            const container = document.getElementById('formContainer');
+            container.classList.add('fade-out');
+
+            setTimeout(() => {
+                window.location.href = 'police1.html?view=dashboard';
+            }, 500); // Match the animation duration
+        });
+
+    </script>
+</body>
+</html>

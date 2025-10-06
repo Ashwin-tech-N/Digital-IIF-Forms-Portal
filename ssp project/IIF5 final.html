@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IF-5 Final Form/Report</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+            color: #000;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 0.5in;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .ncrb-header {
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        label {
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+        input[type="text"], 
+        input[type="date"], 
+        textarea, 
+        select {
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 2px 5px;
+            font-size: 14px;
+            background: transparent;
+        }
+        input[type="text"] {
+            width: 100px;
+        }
+        .wide-input {
+            width: 250px;
+        }
+        textarea {
+            width: 100%;
+            resize: vertical;
+            min-height: 60px;
+            border: 1px solid #000;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: center;
+        }
+        .table th {
+            font-weight: bold;
+            padding: 3px;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #3a5a80;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .button-container {
+                display: none;
+            }
+        }
+        .instruction {
+            font-style: italic;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .signature-area {
+            margin-top: 30px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 5px;
+        }
+        .option-list {
+            margin-left: 20px;
+        }
+        .court-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        /* Animation CSS for fade out effect */
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        /* Animation for fade in effect on page load */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        /* Custom modal styles */
+        .custom-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .custom-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+        .custom-modal-content h3 {
+            margin: 0;
+            color: #4a6fa5;
+        }
+        .custom-modal-content p {
+            margin: 20px 0;
+            color: #555;
+        }
+        .custom-modal-content button {
+            padding: 10px 20px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .custom-modal-content button:hover {
+            background: #3a5a80;
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in" id="formContainer">
+        <div class="ncrb-header">
+            N.C.R.B.
+        </div>
+        <div class="ncrb-header">
+            I.I.F.-V
+        </div>
+        
+        <div class="form-title">
+            FINAL FORM/ REPORT
+        </div>
+        <div class="instruction" style="text-align: center;">
+            (Under Section 173 Cr.P.C.)
+        </div>
+        
+        <div class="court-header">
+            <label>IN THE COURT OF</label>
+            <input type="text" id="courtName" name="courtName" class="wide-input">
+        </div>
+        
+        <form id="finalForm">
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>1. District</label>
+                        <input type="text" id="district" name="district" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>P.S.</label>
+                        <input type="text" id="policeStation" name="policeStation" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="text" id="year" name="year" style="width: 60px;">
+                    </div>
+                    <div class="form-group">
+                        <label>FIR No.</label>
+                        <input type="text" id="firNo" name="firNo" style="width: 80px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="firDate" name="firDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>2. Final Report / Charge Sheet No</label>
+                        <input type="text" id="reportNo" name="reportNo" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>3. Date</label>
+                        <input type="date" id="reportDate" name="reportDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>4. (i) Act</label>
+                        <input type="text" id="act1" name="act1" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections1" name="sections1" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(ii) Act</label>
+                        <input type="text" id="act2" name="act2" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections2" name="sections2" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iii) Act</label>
+                        <input type="text" id="act3" name="act3" class="wide-input">
+                        <label>Sections</label>
+                        <input type="text" id="sections3" name="sections3" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iv) Other Acts & Sections</label>
+                        <input type="text" id="otherActs" name="otherActs" class="wide-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>5. Type of Final Form/Report:</label>
+                    </div>
+                </div>
+                
+                <div class="option-list">
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeChargeSheet" name="reportType" value="Charge Sheet">
+                        <label for="typeChargeSheet">Charge Sheet /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeNotCharged" name="reportType" value="Not charge sheeted for want of evidence">
+                        <label for="typeNotCharged">Not charge sheeted for want of evidence /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeFRTrueUndetected" name="reportType" value="FR True, Undetected">
+                        <label for="typeFRTrueUndetected">FR True, Undetected /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeFRTrueUntraced" name="reportType" value="FR True, Untraced">
+                        <label for="typeFRTrueUntraced">FR True, Untraced /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeFRTrueAbated" name="reportType" value="FR True, offence abated">
+                        <label for="typeFRTrueAbated">FR True, offence abated /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="typeFROccurred" name="reportType" value="FR Unoccurred">
+                        <label for="typeFROccurred">FR Unoccurred .</label>
+                    </div>
+                </div>
+                
+                <div class="instruction">(tick '✓' applicable portion)</div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>6. If FR Unoccurred:</label>
+                    </div>
+                </div>
+                
+                <div class="option-list">
+                    <div class="checkbox-group">
+                        <input type="radio" id="unoccurredFalse" name="unoccurredType" value="False">
+                        <label for="unoccurredFalse">False/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="unoccurredMistakeFact" name="unoccurredType" value="Mistake of Fact">
+                        <label for="unoccurredMistakeFact">Mistake of Fact/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="unoccurredMistakeLaw" name="unoccurredType" value="Mistake of law">
+                        <label for="unoccurredMistakeLaw">Mistake of law/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="unoccurredNonCognisable" name="unoccurredType" value="Non cognisable">
+                        <label for="unoccurredNonCognisable">Non cognisable /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="unoccurredCivil" name="unoccurredType" value="Civil nature">
+                        <label for="unoccurredCivil">Civil nature.</label>
+                    </div>
+                </div>
+                
+                <div class="instruction">(tick '✓' applicable portion)</div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>7. If Charge sheet :</label>
+                    </div>
+                </div>
+                
+                <div class="option-list">
+                    <div class="checkbox-group">
+                        <input type="radio" id="chargeSheetOriginal" name="chargeSheetType" value="Original">
+                        <label for="chargeSheetOriginal">Original /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="chargeSheetSupplementary" name="chargeSheetType" value="Supplementary">
+                        <label for="chargeSheetSupplementary">Supplementary.</label>
+                    </div>
+                </div>
+                
+                <div class="instruction">(tick '✓' applicable portion)</div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>8. Name of I.O</label>
+                        <input type="text" id="ioName" name="ioName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Rank</label>
+                        <input type="text" id="ioRank" name="ioRank" style="width: 100px;">
+                    </div>
+                    <div class="form-group">
+                        <label>No.</label>
+                        <input type="text" id="ioNo" name="ioNo" style="width: 100px;">
+                    </div>
+                </div>
+                
+                <div class="instruction">(at the time of charge sheet)</div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>9. (a) Name of complainant / informant</label>
+                        <input type="text" id="complainantName" name="complainantName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(b) Father's / Husband's name</label>
+                        <input type="text" id="complainantFatherName" name="complainantFatherName" class="wide-input">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>10. Details of Properties/Articles/Documents recovered/seized during investigation and relied upon <br>(separate list can be attached, if necessary).</label>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Property description</th>
+                            <th>Estimated value (Rs.)</th>
+                            <th>P.S. Property Register No.</th>
+                            <th>From whom/ where recovered or seized</th>
+                            <th>Disposal</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td><input type="text" name="property1Desc" style="width: 100%;"></td>
+                            <td><input type="text" name="property1Value" style="width: 100%;"></td>
+                            <td><input type="text" name="property1RegNo" style="width: 100%;"></td>
+                            <td><input type="text" name="property1Recovered" style="width: 100%;"></td>
+                            <td><input type="text" name="property1Disposal" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td><input type="text" name="property2Desc" style="width: 100%;"></td>
+                            <td><input type="text" name="property2Value" style="width: 100%;"></td>
+                            <td><input type="text" name="property2RegNo" style="width: 100%;"></td>
+                            <td><input type="text" name="property2Recovered" style="width: 100%;"></td>
+                            <td><input type="text" name="property2Disposal" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td><input type="text" name="property3Desc" style="width: 100%;"></td>
+                            <td><input type="text" name="property3Value" style="width: 100%;"></td>
+                            <td><input type="text" name="property3RegNo" style="width: 100%;"></td>
+                            <td><input type="text" name="property3Recovered" style="width: 100%;"></td>
+                            <td><input type="text" name="property3Disposal" style="width: 100%;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>11. Particulars of accused persons charge-sheeted: (Use separate sheet for each accused)</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sl. No.</label>
+                        <input type="text" id="accusedSlNo" name="accusedSlNo" style="width: 50px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(i) Name</label>
+                        <input type="text" id="accusedName" name="accusedName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Whether verified</label>
+                        <select id="accusedVerified" name="accusedVerified" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(ii) Father's/Husband's name</label>
+                        <input type="text" id="accusedFatherName" name="accusedFatherName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>(iii) Date/ Year of birth</label>
+                        <input type="date" id="accusedDob" name="accusedDob" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iv) Sex</label>
+                        <select id="accusedSex" name="accusedSex" style="width: 100px;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>(v) Nationality</label>
+                        <input type="text" id="accusedNationality" name="accusedNationality" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(vi) Passport No.</label>
+                        <input type="text" id="accusedPassportNo" name="accusedPassportNo" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Issue</label>
+                        <input type="date" id="passportIssueDate" name="passportIssueDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Place of Issue</label>
+                        <input type="text" id="passportIssuePlace" name="passportIssuePlace" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(vii) Religion</label>
+                        <input type="text" id="accusedReligion" name="accusedReligion" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(viii) Whether SC/ST/OBC</label>
+                        <input type="text" id="accusedCaste" name="accusedCaste" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(ix) Occupation</label>
+                        <input type="text" id="accusedOccupation" name="accusedOccupation" style="width: 150px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                --- 1 / 3 ---
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="ncrb-header">
+                N.C.R.B.
+            </div>
+            <div class="ncrb-header">
+                I.I.F.-V
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(x) Address</label>
+                        <textarea id="accusedAddress" name="accusedAddress"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Whether verified</label>
+                        <select id="addressVerified" name="addressVerified" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xi) Provisional criminal No.</label>
+                        <input type="text" id="provisionalCriminalNo" name="provisionalCriminalNo" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xii) Regular criminal No. (if known)</label>
+                        <input type="text" id="regularCriminalNo" name="regularCriminalNo" style="width: 150px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(xiii) Date of arrest</label>
+                        <input type="date" id="arrestDate" name="arrestDate" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xiv) Date of release on bail</label>
+                        <input type="date" id="bailReleaseDate" name="bailReleaseDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(xv) Date on which forwarded to court</label>
+                        <input type="date" id="forwardedDate" name="forwardedDate" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xvi) Under Acts & Sections</label>
+                        <textarea id="accusedActsSections" name="accusedActsSections"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xvii) Details of bailers / sureties:</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="bailerName" name="bailerName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Father’s/Husband’s name</label>
+                        <input type="text" id="bailerFatherName" name="bailerFatherName" class="wide-input">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <input type="text" id="bailerOccupation" name="bailerOccupation" style="width: 150px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="bailerAddress" name="bailerAddress"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Identification</label>
+                        <textarea id="bailerIdentification" name="bailerIdentification"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xviii) Previous convictions with case references</label>
+                        <textarea id="previousConvictions" name="previousConvictions"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xix) Status of the accused:</label>
+                    </div>
+                </div>
+                
+                <div class="option-list">
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusForwarded" name="accusedStatus" value="Forwarded">
+                        <label for="statusForwarded">Forwarded /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusBailedPolice" name="accusedStatus" value="Bailed by police">
+                        <label for="statusBailedPolice">Bailed by police /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusBailedCourt" name="accusedStatus" value="Bailed by court">
+                        <label for="statusBailedCourt">Bailed by court /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusJudicialCustody" name="accusedStatus" value="Judicial custody">
+                        <label for="statusJudicialCustody">Judicial custody /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusAbsconding" name="accusedStatus" value="Absconding">
+                        <label for="statusAbsconding">Absconding /</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="statusProclaimed" name="accusedStatus" value="Proclaimed offender">
+                        <label for="statusProclaimed">Proclaimed offender</label>
+                    </div>
+                </div>
+                
+                <div class="instruction">(tick '✓' applicable portion)</div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>12. Particulars of accused persons - not charge sheeted (suspect) : (Use separate sheet for each suspect)</label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>SL No.</label>
+                        <input type="text" id="suspectSlNo" name="suspectSlNo" style="width: 50px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(i) Name</label>
+                        <input type="text" id="suspectName" name="suspectName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Whether verified</label>
+                        <select id="suspectVerified" name="suspectVerified" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(ii) Father’s/Husband’s Name</label>
+                        <input type="text" id="suspectFatherName" name="suspectFatherName" class="wide-input">
+                    </div>
+                    <div class="form-group">
+                        <label>(iii) Date/Year of birth</label>
+                        <input type="date" id="suspectDob" name="suspectDob" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(iv) Sex</label>
+                        <select id="suspectSex" name="suspectSex" style="width: 100px;">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>(v) Nationality</label>
+                        <input type="text" id="suspectNationality" name="suspectNationality" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(vi) Passport No.</label>
+                        <input type="text" id="suspectPassportNo" name="suspectPassportNo" style="width: 120px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Issue</label>
+                        <input type="date" id="suspectPassportIssueDate" name="suspectPassportIssueDate" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Place of Issue</label>
+                        <input type="text" id="suspectPassportIssuePlace" name="suspectPassportIssuePlace" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(vii) Religion</label>
+                        <input type="text" id="suspectReligion" name="suspectReligion" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(viii) Whether SC/ST/OBC</label>
+                        <input type="text" id="suspectCaste" name="suspectCaste" style="width: 120px;">
+                    </div>
+                    <div class="form-group">
+                        <label>(ix) Occupation</label>
+                        <input type="text" id="suspectOccupation" name="suspectOccupation" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(x) Address</label>
+                        <textarea id="suspectAddress" name="suspectAddress"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Whether verified</label>
+                        <select id="suspectAddressVerified" name="suspectAddressVerified" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xi) Provisional criminal No.</label>
+                        <input type="text" id="suspectProvisionalNo" name="suspectProvisionalNo" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xii) Suspicion approved :</label>
+                        <select id="suspicionApproved" name="suspicionApproved" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xiii) Status of the accused (suspect):</label>
+                    </div>
+                </div>
+                
+                <div class="option-list">
+                    <div class="checkbox-group">
+                        <input type="radio" id="suspectStatusBailedPolice" name="suspectStatus" value="Bailed by police">
+                        <label for="suspectStatusBailedPolice">Bailed by police/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="suspectStatusBailedCourt" name="suspectStatus" value="Bailed by court">
+                        <label for="suspectStatusBailedCourt">Bailed by court/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="suspectStatusJudicial" name="suspectStatus" value="Judicial custody">
+                        <label for="suspectStatusJudicial">Judicial custody/</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="radio" id="suspectStatusNotArrested" name="suspectStatus" value="Not arrested">
+                        <label for="suspectStatusNotArrested">Not arrested</label>
+                    </div>
+                </div>
+                
+                <div class="instruction">(tick '✓' applicable portion)</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xiv) Under Acts & Sections</label>
+                        <textarea id="suspectActsSections" name="suspectActsSections"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>(xv) Any Special remarks including reasons for not charge sheeting</label>
+                        <textarea id="suspectRemarks" name="suspectRemarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-break"></div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>13. Particulars of witnesses to be examined:</label>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Sl. No.</th>
+                            <th>Name</th>
+                            <th>Father's/Husband's name</th>
+                            <th>Date/Year of birth</th>
+                            <th>Occupation</th>
+                            <th>Address</th>
+                            <th>Type of evidence to be tendered</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.</td>
+                            <td><input type="text" name="witness1Name" style="width: 100%;"></td>
+                            <td><input type="text" name="witness1FatherName" style="width: 100%;"></td>
+                            <td><input type="text" name="witness1Dob" style="width: 100%;"></td>
+                            <td><input type="text" name="witness1Occupation" style="width: 100%;"></td>
+                            <td><input type="text" name="witness1Address" style="width: 100%;"></td>
+                            <td><input type="text" name="witness1Evidence" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td><input type="text" name="witness2Name" style="width: 100%;"></td>
+                            <td><input type="text" name="witness2FatherName" style="width: 100%;"></td>
+                            <td><input type="text" name="witness2Dob" style="width: 100%;"></td>
+                            <td><input type="text" name="witness2Occupation" style="width: 100%;"></td>
+                            <td><input type="text" name="witness2Address" style="width: 100%;"></td>
+                            <td><input type="text" name="witness2Evidence" style="width: 100%;"></td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td><input type="text" name="witness3Name" style="width: 100%;"></td>
+                            <td><input type="text" name="witness3FatherName" style="width: 100%;"></td>
+                            <td><input type="text" name="witness3Dob" style="width: 100%;"></td>
+                            <td><input type="text" name="witness3Occupation" style="width: 100%;"></td>
+                            <td><input type="text" name="witness3Address" style="width: 100%;"></td>
+                            <td><input type="text" name="witness3Evidence" style="width: 100%;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>14. If FR is false, indicate action taken or proposed to be taken u/s 182/211 I.P.C</label>
+                        <textarea id="falseFRAction" name="falseFRAction"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>15. Result of Laboratory analysis</label>
+                        <textarea id="labAnalysisResult" name="labAnalysisResult"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>16. Brief facts of the case (Add separate sheet, if necessary)</label>
+                        <textarea id="caseFacts" name="caseFacts"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>17. Refer Notice served :</label>
+                        <select id="noticeServed" name="noticeServed" style="width: 100px;">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="noticeDate" name="noticeDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>18. Despatched on</label>
+                        <input type="date" id="despatchedDate" name="despatchedDate" style="width: 120px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>19. No. of enclosures</label>
+                        <input type="text" id="enclosuresNo" name="enclosuresNo" style="width: 80px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>20. List of enclosures :</label>
+                        <textarea id="enclosuresList" name="enclosuresList"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="justify-content: space-between; margin-top: 20px;">
+                    <div>
+                        <div class="form-row">
+                            <label>As annexed Forwarded by Officer in charge</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="oicName" name="oicName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Rank</label>
+                            <input type="text" id="oicRank" name="oicRank" style="width: 100px;">
+                            <label>No.</label>
+                            <input type="text" id="oicNo" name="oicNo" style="width: 100px;">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-row">
+                            <label>Signature of Investigating Officer submitting Final report/Charge sheet</label>
+                        </div>
+                        <div class="form-row">
+                            <label>Name</label>
+                            <input type="text" id="ioSubmitName" name="ioSubmitName" class="wide-input">
+                        </div>
+                        <div class="form-row">
+                            <label>Rank</label>
+                            <input type="text" id="ioSubmitRank" name="ioSubmitRank" style="width: 100px;">
+                            <label>No.</label>
+                            <input type="text" id="ioSubmitNo" name="ioSubmitNo" style="width: 100px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                --- : 3/3 ---
+            </div>
+            
+            <div class="button-container">
+                <button type="button" class="btn" id="saveBtn">Save Form</button>
+                <button type="button" class="btn" id="printBtn">Print Form</button>
+                <button type="button" class="btn" id="exitBtn">Exit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             const container = document.getElementById('formContainer');
+             container.classList.add('fade-in');
+        });
+
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const form = document.getElementById('finalForm');
+            const formData = new FormData(form);
+            const formObject = Object.fromEntries(formData.entries());
+
+            if (!formObject.firNo || !formObject.firDate) {
+                showCustomModal('Please fill at least the FIR No. and Date before saving.');
+                return;
+            }
+
+            const recordId = 'IIF5-' + Date.now();
+            const record = {
+                id: recordId,
+                formData: formObject
+            };
+
+            let records = JSON.parse(localStorage.getItem('iif5_records')) || [];
+            records.push(record);
+            localStorage.setItem('iif5_records', JSON.stringify(records));
+
+            showCustomModal('Form data saved successfully!');
+            window.location.href = 'police1.html?view=dashboard&tab=records';
+        });
+
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
+        });
+
+        document.getElementById('exitBtn').addEventListener('click', function() {
+            const container = document.getElementById('formContainer');
+            container.classList.remove('fade-in');
+            container.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'police1.html?view=dashboard';
+            }, 500);
+        });
+
+        function showCustomModal(message) {
+            const modalHTML = `
+                <div class="custom-modal" id="customModal">
+                    <div class="custom-modal-content">
+                        <h3>Notice</h3>
+                        <p>${message}</p>
+                        <button onclick="document.getElementById('customModal').remove()">OK</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+    </script>
+</body>
+</html>
